@@ -20,6 +20,17 @@ public class Main implements ScheduledAction{
 
     @Override
     public void onTime(ScheduledActionContext scheduledActionContext) {
-        System.out.println("Hello :)");
+        Properties props = new Properties();
+        Sankhya s = new Sankhya(props.getProperty("sankhya.id.username"),
+                props.getProperty("sankhya.id.password"),
+                props.getProperty("sankhya.token"),
+                props.getProperty("sankhya.appkey")
+        );
+        try {
+            s.login();
+        }
+        catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
