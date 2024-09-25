@@ -1,21 +1,35 @@
 package br.com.luciano;
-import java.io.*;
-import java.util.Properties;
 import org.cuckoo.core.ScheduledAction;
 import org.cuckoo.core.ScheduledActionContext;
+import org.json.JSONException;
 
-public class Main implements ScheduledAction{
+import java.io.*;
+import java.util.Properties;
+
+public class Main implements ScheduledAction {
     public static Properties getProp() throws IOException {
         Properties props = new Properties();
-        BufferedReader file = new BufferedReader(new FileReader("config.properties"));
+        BufferedReader file = new BufferedReader(new FileReader("data.properties"));
         props.load(file);
         return props;
     }
 
     public static void main(String[] args) throws IOException {
-        Properties prop = getProp();
-        String token = prop.getProperty("sankhya.token");
-        System.out.println("Hello world!, " + token);
+        Properties props = getProp();
+        Sankhya s = new Sankhya(props.getProperty("sankhya.id.username"),
+                props.getProperty("sankhya.id.password"),
+                props.getProperty("sankhya.token"),
+                props.getProperty("sankhya.appkey")
+        );
+        try {
+            if (s.login()){
+                System.out.println("Oi, login realizado com sucesso");
+            }
+            //s.buscarDadosParaAnalise();
+        }
+        catch (IOException | JSONException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
@@ -29,7 +43,7 @@ public class Main implements ScheduledAction{
         try {
             s.login();
         }
-        catch (IOException e) {
+        catch (IOException | JSONException e) {
             throw new RuntimeException(e);
         }
     }
