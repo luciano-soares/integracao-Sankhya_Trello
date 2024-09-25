@@ -23,9 +23,9 @@ public class Main implements ScheduledAction {
         );
         try {
             if (s.login()){
-                System.out.println("Oi, login realizado com sucesso");
+                System.out.println("Oi");
+                s.logout();
             }
-            //s.buscarDadosParaAnalise();
         }
         catch (IOException | JSONException e) {
             throw new RuntimeException(e);
