@@ -6,7 +6,7 @@ import org.json.JSONException;
 import java.io.*;
 import java.util.Properties;
 
-public class Main implements ScheduledAction {
+public class Main /*implements ScheduledAction*/ {
     public static Properties getProp() throws IOException {
         Properties props = new Properties();
         BufferedReader file = new BufferedReader(new FileReader("data.properties"));
@@ -23,6 +23,7 @@ public class Main implements ScheduledAction {
         );
         try {
             if (s.login()){
+                s.buscaDadosFlow();
                 System.out.println("Oi");
                 s.logout();
             }
@@ -32,7 +33,7 @@ public class Main implements ScheduledAction {
         }
     }
 
-    @Override
+    /*@Override
     public void onTime(ScheduledActionContext scheduledActionContext) {
         Properties props = new Properties();
         Sankhya s = new Sankhya(props.getProperty("sankhya.id.username"),
@@ -46,5 +47,5 @@ public class Main implements ScheduledAction {
         catch (IOException | JSONException e) {
             throw new RuntimeException(e);
         }
-    }
+    }*/
 }
